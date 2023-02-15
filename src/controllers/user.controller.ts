@@ -16,7 +16,7 @@ const userPost = async({ body }: Request, res: Response) => {
             success: false, 
             message: 'Error creating user',
             error
-        })
+        });
     }
 }; 
 
