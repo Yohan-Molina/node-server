@@ -1,13 +1,23 @@
 import { Request, Response } from "express";
-import UserModel from "../models/nosql/user.model";
+import { createUser } from "../services/user.service";
 
 const userPost = async({ body }: Request, res: Response) => {
 
-    const { name, email, password, rol } = body;
-    const user = new UserModel({ name, email, password, rol });
-
-    await user.save()
-    res.status(201).json({ user })
+    try {
+        const user = await createUser(body);
+        res.status(201).send({
+            success: true,
+            message: 'User created successfully',
+            user
+        })
+    } catch (error) {
+        console.log('Error creating user: ', error); 
+        res.status(400).send({
+            success: false, 
+            message: 'Error creating user',
+            error
+        })
+    }
 }; 
 
 export { userPost };
