@@ -1,8 +1,8 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 const router = Router();
 
-router.post('/', (req: Request, res: Response) => {
-    res.send('Esta es la ruta de users');
-});
+import { userPost } from "../controllers/user.controller";
+
+router.post('/', userPost);
 
 export { router };
