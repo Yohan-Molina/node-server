@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { 
     createUser, 
+    deleteUserById, 
     getAllUsers, 
     getUserById, 
     updateUser } from "../services/user.service";
@@ -71,4 +72,17 @@ const userGetById = async ({ params }: Request, res: Response) => {
     }
 }
 
-export { userPost, userPut, usersGet, userGetById };
+const deleteUser = async ({ params }: Request, res: Response) => {
+    try {
+        const { id } = params;
+        const user = await deleteUserById(id);
+        res.json({
+            success: true,
+            message: `El usuario '${ user?.name }' eliminado correctamente`
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+export { userPost, userPut, usersGet, userGetById, deleteUser };

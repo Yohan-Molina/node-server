@@ -49,9 +49,19 @@ const getUserById = async (id: string) => {
     return user;
 }
 
+const deleteUserById = async (id: string) => {
+
+    // Lo borramos fisicamente
+    // const user = await UserModel.remove({ _id: id });
+
+    const user = await UserModel.findByIdAndUpdate( id, { state: false });
+    return user;
+}
+
 export { 
     createUser, 
     updateUser, 
     getAllUsers, 
-    getUserById
+    getUserById, 
+    deleteUserById
 };

@@ -18,9 +18,17 @@ const validateUpdateUser = [
     check('id').custom(userExistsById),
     check('rol').custom(isRoleValid),
     (req: Request, res: Response, next: NextFunction) => validateResult(req, res, next)
-]
+];
+
+
+const validateDeleteUser = [
+    check('id', 'Not a valid identifier, please enter a valid ID').isMongoId(),
+    check('id').custom(userExistsById),
+    (req: Request, res: Response, next: NextFunction) => validateResult(req, res, next)
+];
 
 export { 
     validateCreateUser, 
-    validateUpdateUser
+    validateUpdateUser, 
+    validateDeleteUser
 };
