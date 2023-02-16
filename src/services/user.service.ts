@@ -24,9 +24,24 @@ const updateUser = async(id: string, user: any) => {
 
 };
 
-const getAllUsers = async () => {
-    const users = await UserModel.find({});
-    return users;
+const getAllUsers = async (limit: number, from: number) => {
+
+    const state = { state: true };
+
+    /* const users = await UserModel.find(state) 
+        .skip(from) 
+        .limit(limit); 
+        
+    const total = await UserModel.countDocuments(state); */
+
+    const [total, users] = await Promise.all([
+        UserModel.countDocuments(state), 
+        UserModel.find(state)
+            .skip(from)
+            .limit(limit)
+    ])
+
+    return [total, users];
 }
 
 const getUserById = async (id: string) => {

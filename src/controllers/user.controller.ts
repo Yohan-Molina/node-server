@@ -49,10 +49,13 @@ const userPut = async({ body, params }: Request, res: Response) => {
     }); */
 }
 
-const usersGet = async (req: Request, res: Response) => {
+const usersGet = async ({ query }: Request, res: Response) => {
+
+    const { limit = 5, from = 0 } = query;
+
     try {
-        const users = await getAllUsers();
-        res.send(users)
+        const [total, users] = await getAllUsers(Number(limit), Number(from));
+        res.json({total, users})
     } catch (e) {
         console.log(e);
     }
