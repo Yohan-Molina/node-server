@@ -9,4 +9,22 @@ const createUser = async({ name, email, password, rol }: UserI) => {
     return user;
 };
 
-export { createUser };
+const updateUser = async(id: string, user: any) => {
+
+    const { _id, password, google, email, ...rest} = user;
+
+    if(password) {
+        const encryptedPassword = await encryptPassword(password);
+        user.password = encryptedPassword; 
+    }
+
+    const userUpdate = await UserModel.findByIdAndUpdate(
+        { _id: id }, rest, { new: true });
+    return userUpdate;
+
+};
+
+export { 
+    createUser, 
+    updateUser 
+};
