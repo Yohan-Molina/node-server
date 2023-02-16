@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import UserModel from "../models/nosql/user.model";
 import { 
     createUser, 
+    getAllUsers, 
+    getUserById, 
     updateUser } from "../services/user.service";
-import { encryptPassword } from "../utils/encrypter";
 
 const userPost = async({ body }: Request, res: Response) => {
 
@@ -49,4 +49,23 @@ const userPut = async({ body, params }: Request, res: Response) => {
     }); */
 }
 
-export { userPost, userPut };
+const usersGet = async (req: Request, res: Response) => {
+    try {
+        const users = await getAllUsers();
+        res.send(users)
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+const userGetById = async ({ params }: Request, res: Response) => {
+    try {
+        const { id } = params;
+        const user = await getUserById(id);
+        res.send(user)
+    } catch (e) {
+        console.log(e);
+    }
+}
+
+export { userPost, userPut, usersGet, userGetById };

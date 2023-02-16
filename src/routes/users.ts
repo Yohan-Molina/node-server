@@ -1,9 +1,20 @@
 import { Router } from "express";
 const router = Router();
 
-import { userPost, userPut } from "../controllers/user.controller";
-import { validateCreateUser, validateUpdateUser } from "../validators/user.validator";
+// Controllers
+import { 
+    userGetById, 
+    userPost, 
+    userPut, 
+    usersGet } from "../controllers/user.controller";
 
+// Validators
+import { 
+    validateCreateUser, 
+    validateUpdateUser } from "../validators/user.validator";
+
+router.get('/', usersGet);
+router.get('/:id', userGetById);
 router.post('/', validateCreateUser, userPost);
 router.put('/:id', validateUpdateUser, userPut);
 

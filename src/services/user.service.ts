@@ -24,7 +24,19 @@ const updateUser = async(id: string, user: any) => {
 
 };
 
+const getAllUsers = async () => {
+    const users = await UserModel.find({});
+    return users;
+}
+
+const getUserById = async (id: string) => {
+    const user = await UserModel.findOne({ _id: id });
+    return user;
+}
+
 export { 
     createUser, 
-    updateUser 
+    updateUser, 
+    getAllUsers, 
+    getUserById
 };
